@@ -1,0 +1,708 @@
+{
+  "_comment": "Generated from the original logic in Raumbelegung.html (lines 185-242). Both recurrence.py and recurrence.ts must pass all cases. Dates are local calendar dates (YYYY-MM-DD), times HH:MM. Default horizon is 730 days.",
+  "occursOn": [
+    {
+      "name": "none same day",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "none",
+        "until": null
+      },
+      "day": "2026-11-03",
+      "expected": true
+    },
+    {
+      "name": "none other day",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "none",
+        "until": null
+      },
+      "day": "2026-11-04",
+      "expected": false
+    },
+    {
+      "name": "before start",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "daily",
+        "until": null
+      },
+      "day": "2026-11-02",
+      "expected": false
+    },
+    {
+      "name": "daily",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "daily",
+        "until": null
+      },
+      "day": "2027-05-17",
+      "expected": true
+    },
+    {
+      "name": "daily after until",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "daily",
+        "until": "2026-11-10"
+      },
+      "day": "2026-11-11",
+      "expected": false
+    },
+    {
+      "name": "daily on until",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "daily",
+        "until": "2026-11-10"
+      },
+      "day": "2026-11-10",
+      "expected": true
+    },
+    {
+      "name": "weekdays monday",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "weekdays",
+        "until": null
+      },
+      "day": "2026-11-09",
+      "expected": true
+    },
+    {
+      "name": "weekdays saturday",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "weekdays",
+        "until": null
+      },
+      "day": "2026-11-07",
+      "expected": false
+    },
+    {
+      "name": "weekdays sunday",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "weekdays",
+        "until": null
+      },
+      "day": "2026-11-08",
+      "expected": false
+    },
+    {
+      "name": "weekly same weekday",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "14:00",
+        "end": "17:00",
+        "rec": "weekly",
+        "until": null
+      },
+      "day": "2026-12-29",
+      "expected": true
+    },
+    {
+      "name": "weekly other weekday",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "14:00",
+        "end": "17:00",
+        "rec": "weekly",
+        "until": null
+      },
+      "day": "2026-12-30",
+      "expected": false
+    },
+    {
+      "name": "monthly 1st wednesday",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-04",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "monthly",
+        "until": null
+      },
+      "day": "2026-12-02",
+      "expected": true
+    },
+    {
+      "name": "monthly 1st wednesday wrong week",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-04",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "monthly",
+        "until": null
+      },
+      "day": "2026-12-09",
+      "expected": false
+    },
+    {
+      "name": "monthly 3rd friday",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-20",
+        "start": "18:00",
+        "end": "20:00",
+        "rec": "monthly",
+        "until": null
+      },
+      "day": "2027-01-15",
+      "expected": true
+    },
+    {
+      "name": "monthly 5th thursday only in 5-thursday months",
+      "booking": {
+        "title": "X",
+        "date": "2026-10-29",
+        "start": "10:00",
+        "end": "11:00",
+        "rec": "monthly",
+        "until": null
+      },
+      "day": "2026-12-31",
+      "expected": true
+    },
+    {
+      "name": "monthly 5th thursday absent month",
+      "booking": {
+        "title": "X",
+        "date": "2026-10-29",
+        "start": "10:00",
+        "end": "11:00",
+        "rec": "monthly",
+        "until": null
+      },
+      "day": "2026-11-26",
+      "expected": false
+    },
+    {
+      "name": "monthlyLast last friday",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-27",
+        "start": "19:00",
+        "end": "22:00",
+        "rec": "monthlyLast",
+        "until": null
+      },
+      "day": "2027-01-29",
+      "expected": true
+    },
+    {
+      "name": "monthlyLast not last friday",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-27",
+        "start": "19:00",
+        "end": "22:00",
+        "rec": "monthlyLast",
+        "until": null
+      },
+      "day": "2027-01-22",
+      "expected": false
+    },
+    {
+      "name": "monthlyLast february",
+      "booking": {
+        "title": "X",
+        "date": "2026-11-27",
+        "start": "19:00",
+        "end": "22:00",
+        "rec": "monthlyLast",
+        "until": null
+      },
+      "day": "2027-02-26",
+      "expected": true
+    },
+    {
+      "name": "monthly leap-year february",
+      "booking": {
+        "title": "X",
+        "date": "2027-12-01",
+        "start": "09:00",
+        "end": "10:00",
+        "rec": "monthly",
+        "until": null
+      },
+      "day": "2028-02-02",
+      "expected": true
+    },
+    {
+      "name": "monthlyLast across leap day",
+      "booking": {
+        "title": "X",
+        "date": "2028-01-31",
+        "start": "09:00",
+        "end": "10:00",
+        "rec": "monthlyLast",
+        "until": null
+      },
+      "day": "2028-02-29",
+      "expected": false
+    }
+  ],
+  "overlaps": [
+    {
+      "name": "inside",
+      "a": {
+        "start": "10:00",
+        "end": "12:00"
+      },
+      "b": {
+        "start": "10:30",
+        "end": "11:00"
+      },
+      "expected": true
+    },
+    {
+      "name": "partial",
+      "a": {
+        "start": "10:00",
+        "end": "12:00"
+      },
+      "b": {
+        "start": "11:30",
+        "end": "13:00"
+      },
+      "expected": true
+    },
+    {
+      "name": "adjacent end==start",
+      "a": {
+        "start": "10:00",
+        "end": "12:00"
+      },
+      "b": {
+        "start": "12:00",
+        "end": "13:00"
+      },
+      "expected": false
+    },
+    {
+      "name": "disjoint",
+      "a": {
+        "start": "08:00",
+        "end": "09:00"
+      },
+      "b": {
+        "start": "10:00",
+        "end": "11:00"
+      },
+      "expected": false
+    },
+    {
+      "name": "identical",
+      "a": {
+        "start": "10:00",
+        "end": "12:00"
+      },
+      "b": {
+        "start": "10:00",
+        "end": "12:00"
+      },
+      "expected": true
+    }
+  ],
+  "conflicts": [
+    {
+      "name": "single hits weekly",
+      "candidate": {
+        "title": "X",
+        "date": "2026-12-15",
+        "start": "16:00",
+        "end": "18:00",
+        "rec": "none",
+        "until": null
+      },
+      "others": [
+        {
+          "id": "tue",
+          "title": "Spielenachmittag",
+          "date": "2026-11-03",
+          "start": "14:00",
+          "end": "17:00",
+          "rec": "weekly",
+          "until": null
+        },
+        {
+          "id": "wed",
+          "title": "Beratungssprechstunde",
+          "date": "2026-11-04",
+          "start": "10:00",
+          "end": "12:00",
+          "rec": "monthly",
+          "until": null
+        }
+      ],
+      "expected": [
+        {
+          "id": "tue",
+          "dates": [
+            "2026-12-15"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "single adjacent no conflict",
+      "candidate": {
+        "title": "X",
+        "date": "2026-12-15",
+        "start": "17:00",
+        "end": "18:00",
+        "rec": "none",
+        "until": null
+      },
+      "others": [
+        {
+          "id": "tue",
+          "title": "Spielenachmittag",
+          "date": "2026-11-03",
+          "start": "14:00",
+          "end": "17:00",
+          "rec": "weekly",
+          "until": null
+        },
+        {
+          "id": "wed",
+          "title": "Beratungssprechstunde",
+          "date": "2026-11-04",
+          "start": "10:00",
+          "end": "12:00",
+          "rec": "monthly",
+          "until": null
+        }
+      ],
+      "expected": []
+    },
+    {
+      "name": "single other weekday",
+      "candidate": {
+        "title": "X",
+        "date": "2026-12-16",
+        "start": "16:00",
+        "end": "18:00",
+        "rec": "none",
+        "until": null
+      },
+      "others": [
+        {
+          "id": "tue",
+          "title": "Spielenachmittag",
+          "date": "2026-11-03",
+          "start": "14:00",
+          "end": "17:00",
+          "rec": "weekly",
+          "until": null
+        },
+        {
+          "id": "wed",
+          "title": "Beratungssprechstunde",
+          "date": "2026-11-04",
+          "start": "10:00",
+          "end": "12:00",
+          "rec": "monthly",
+          "until": null
+        }
+      ],
+      "expected": []
+    },
+    {
+      "name": "weekdays series vs weekly + monthly",
+      "candidate": {
+        "title": "X",
+        "date": "2026-11-09",
+        "start": "11:00",
+        "end": "15:00",
+        "rec": "weekdays",
+        "until": "2026-12-31"
+      },
+      "others": [
+        {
+          "id": "tue",
+          "title": "Spielenachmittag",
+          "date": "2026-11-03",
+          "start": "14:00",
+          "end": "17:00",
+          "rec": "weekly",
+          "until": null
+        },
+        {
+          "id": "wed",
+          "title": "Beratungssprechstunde",
+          "date": "2026-11-04",
+          "start": "10:00",
+          "end": "12:00",
+          "rec": "monthly",
+          "until": null
+        }
+      ],
+      "expected": [
+        {
+          "id": "tue",
+          "dates": [
+            "2026-11-10",
+            "2026-11-17",
+            "2026-11-24",
+            "2026-12-01",
+            "2026-12-08",
+            "2026-12-15",
+            "2026-12-22",
+            "2026-12-29"
+          ]
+        },
+        {
+          "id": "wed",
+          "dates": [
+            "2026-12-02"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "daily evening vs monthlyLast with until",
+      "candidate": {
+        "title": "X",
+        "date": "2026-11-01",
+        "start": "20:00",
+        "end": "21:00",
+        "rec": "daily",
+        "until": null
+      },
+      "others": [
+        {
+          "id": "tue",
+          "title": "Spielenachmittag",
+          "date": "2026-11-03",
+          "start": "14:00",
+          "end": "17:00",
+          "rec": "weekly",
+          "until": null
+        },
+        {
+          "id": "wed",
+          "title": "Beratungssprechstunde",
+          "date": "2026-11-04",
+          "start": "10:00",
+          "end": "12:00",
+          "rec": "monthly",
+          "until": null
+        },
+        {
+          "id": "last",
+          "title": "Stammtisch",
+          "date": "2026-11-27",
+          "start": "19:00",
+          "end": "22:00",
+          "rec": "monthlyLast",
+          "until": "2027-03-31"
+        }
+      ],
+      "expected": [
+        {
+          "id": "last",
+          "dates": [
+            "2026-11-27",
+            "2026-12-25",
+            "2027-01-29",
+            "2027-02-26",
+            "2027-03-26"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "weekly vs self id skipped",
+      "candidate": {
+        "id": "tue",
+        "title": "Spielenachmittag",
+        "date": "2026-11-03",
+        "start": "14:00",
+        "end": "17:00",
+        "rec": "weekly",
+        "until": null
+      },
+      "others": [
+        {
+          "id": "tue",
+          "title": "Spielenachmittag",
+          "date": "2026-11-03",
+          "start": "14:00",
+          "end": "17:00",
+          "rec": "weekly",
+          "until": null
+        },
+        {
+          "id": "wed",
+          "title": "Beratungssprechstunde",
+          "date": "2026-11-04",
+          "start": "10:00",
+          "end": "12:00",
+          "rec": "monthly",
+          "until": null
+        }
+      ],
+      "expected": []
+    },
+    {
+      "name": "small horizon",
+      "candidate": {
+        "title": "X",
+        "date": "2026-11-01",
+        "start": "15:00",
+        "end": "16:00",
+        "rec": "daily",
+        "until": null
+      },
+      "others": [
+        {
+          "id": "tue",
+          "title": "Spielenachmittag",
+          "date": "2026-11-03",
+          "start": "14:00",
+          "end": "17:00",
+          "rec": "weekly",
+          "until": null
+        }
+      ],
+      "horizon": 10,
+      "expected": [
+        {
+          "id": "tue",
+          "dates": [
+            "2026-11-03",
+            "2026-11-10"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "series ending before other starts",
+      "candidate": {
+        "title": "X",
+        "date": "2026-10-01",
+        "start": "14:00",
+        "end": "15:00",
+        "rec": "weekly",
+        "until": "2026-10-27"
+      },
+      "others": [
+        {
+          "id": "tue",
+          "title": "Spielenachmittag",
+          "date": "2026-11-03",
+          "start": "14:00",
+          "end": "17:00",
+          "rec": "weekly",
+          "until": null
+        }
+      ],
+      "expected": []
+    }
+  ],
+  "describe": [
+    {
+      "booking": {
+        "id": "tue",
+        "title": "Spielenachmittag",
+        "date": "2026-11-03",
+        "start": "14:00",
+        "end": "17:00",
+        "rec": "weekly",
+        "until": null
+      },
+      "expected": "jeden Dienstag"
+    },
+    {
+      "booking": {
+        "id": "wed",
+        "title": "Beratungssprechstunde",
+        "date": "2026-11-04",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "monthly",
+        "until": null
+      },
+      "expected": "jeden 1. Mittwoch im Monat"
+    },
+    {
+      "booking": {
+        "id": "last",
+        "title": "Stammtisch",
+        "date": "2026-11-27",
+        "start": "19:00",
+        "end": "22:00",
+        "rec": "monthlyLast",
+        "until": "2027-03-31"
+      },
+      "expected": "jeden letzten Freitag im Monat bis 31.03.2027"
+    },
+    {
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "daily",
+        "until": null
+      },
+      "expected": "täglich"
+    },
+    {
+      "booking": {
+        "title": "X",
+        "date": "2026-11-03",
+        "start": "10:00",
+        "end": "12:00",
+        "rec": "weekdays",
+        "until": "2026-12-19"
+      },
+      "expected": "Montag bis Freitag bis 19.12.2026"
+    },
+    {
+      "booking": {
+        "title": "X",
+        "date": "2026-12-24",
+        "start": "15:00",
+        "end": "16:00",
+        "rec": "none",
+        "until": null
+      },
+      "expected": "Do, 24.12.2026"
+    }
+  ]
+}
