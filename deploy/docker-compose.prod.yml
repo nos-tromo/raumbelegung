@@ -1,0 +1,93 @@
+# Produktion auf dem VPS.
+# Auf dem Server liegen der Ordner deploy/ (inkl. .env) und das Makefile. Die Images kommen aus GHCR.
+#   make pull up     (= docker compose -f deploy/docker-compose.prod.yml pull && … up -d)
+# Lokal testen (baut selbst, DOMAIN=localhost): make build up, siehe docs/LOKAL-TESTEN.md, Abschnitt 7.
+
+name: raumbelegung
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  web:
+    image: ${WEB_IMAGE:-ghcr.io/OWNER/raumbelegung-web:latest}
+    build:
+      context: ..
+      dockerfile: deploy/web.Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN:?DOMAIN fehlt in .env}
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      backend:
+        condition: service_healthy
+    logging: *logging
+
+  backend:
+    image: ${BACKEND_IMAGE:-ghcr.io/OWNER/raumbelegung-backend:latest}
+    build:
+      context: ../backend
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      FRONTEND_URL: https://${DOMAIN}
+      COOKIE_SECURE: "true"
+      MAIL_BACKEND: smtp
+      ENABLE_DOCS: "false"
+      RATE_LIMIT_ENABLED: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=3).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    logging: *logging
+
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+      POSTGRES_DB: ${POSTGRES_DB:?}
+    volumes:
+      # Ab Postgres 18 wird das übergeordnete Verzeichnis gemountet.
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging: *logging
+
+  # Läuft nicht dauerhaft, sondern per Host-Cron:
+  #   docker compose -f docker-compose.prod.yml --profile backup run --rm backup
+  # Von Hand: make backup, make snapshots, make restore (Makefile im Repo-Root).
+  backup:
+    build: ./backup
+    profiles: ["backup"]
+    env_file: .env
+    environment:
+      PGHOST: db
+    depends_on:
+      db:
+        condition: service_healthy
+    logging: *logging
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:
