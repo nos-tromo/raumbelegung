@@ -1,0 +1,32 @@
+# Lokale Entwicklung: Datenbank + Mailpit.
+#   make services   (oder: docker compose up -d)
+# Mailpit-Oberfläche (Aktivierungs- und Reset-Mails): http://localhost:8025
+# Backend und Frontend laufen nativ mit Hot-Reload: make dev, siehe README.
+
+name: raumbelegung-dev
+
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: raumbelegung
+      POSTGRES_PASSWORD: raumbelegung
+      POSTGRES_DB: raumbelegung
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U raumbelegung -d raumbelegung"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  mailpit:
+    image: axllent/mailpit:v1
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web-UI
+
+volumes:
+  pgdata:
