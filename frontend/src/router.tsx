@@ -1,4 +1,4 @@
-import { createBrowserRouter, type RouteObject } from 'react-router';
+import { createBrowserRouter, Navigate, type RouteObject } from 'react-router';
 import { RedirectIfAuthed, RequireAuth, RequireVerified } from './auth/guards';
 import { ErrorPage } from './components/ErrorPage';
 import { Layout } from './components/Layout';
@@ -7,7 +7,6 @@ import { CalendarList } from './pages/CalendarList';
 import { CalendarView } from './pages/CalendarView';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { Invite } from './pages/Invite';
-import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
 import { NotFound } from './pages/NotFound';
 import { Register } from './pages/Register';
@@ -21,7 +20,8 @@ export const routes: RouteObject[] = [
     ErrorBoundary: ErrorPage,
     HydrateFallback: () => <Loading />,
     children: [
-      { index: true, Component: Landing },
+      // No landing page: /app shows the calendars, or sends logged-out visitors to /login.
+      { index: true, element: <Navigate to="/app" replace /> },
       {
         path: 'impressum',
         lazy: () => import('./pages/Impressum').then((m) => ({ Component: m.Impressum })),

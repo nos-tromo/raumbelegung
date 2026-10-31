@@ -169,7 +169,7 @@ Neue Buchungen sperren beim Speichern die Kalenderzeile (`SELECT … FOR UPDATE`
 
 | Route                                            | Zugriff     | Inhalt                                                                                                                                |
 | ------------------------------------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `/`                                            | öffentlich | Kurze Erklärung, Links zu Login und Registrierung, angemeldet direkt weiter zu `/app`                                              |
+| `/`                                            | öffentlich | Leitet zu `/app` weiter; wer nicht angemeldet ist, landet von dort auf `/login`                                                    |
 | `/login`, `/register`                        | öffentlich |                                                                                                                                       |
 | `/verify?token=`                               | öffentlich | bestätigt automatisch und zeigt das Ergebnis                                                                                         |
 | `/forgot-password`, `/reset-password?token=` | öffentlich |                                                                                                                                       |

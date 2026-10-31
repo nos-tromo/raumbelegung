@@ -726,47 +726,6 @@ details.month > .empty {
   padding: 0 0 12px;
 }
 
-/* ---------- Landing ---------- */
-.landing {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  padding-top: 16px;
-}
-.hero h1 {
-  font-size: clamp(34px, 7vw, 54px);
-}
-.lead {
-  font-size: 18px;
-  max-width: 56ch;
-  color: var(--muted);
-  margin: 14px 0 22px;
-}
-.features {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
-  gap: 16px;
-}
-.features li {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 16px 18px;
-  color: var(--muted);
-  font-size: 14px;
-}
-.features strong {
-  display: block;
-  color: var(--fg);
-  font-family: var(--f-display);
-  font-weight: 600;
-  font-size: 17px;
-  margin-bottom: 4px;
-}
-
 /* ---------- Legal ---------- */
 .legal {
   max-width: 760px;

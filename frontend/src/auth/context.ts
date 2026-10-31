@@ -27,5 +27,6 @@ export function safeNext(next: string | null | undefined, fallback = '/app'): st
 
 export function loginPathFor(location: { pathname: string; search: string; hash: string }): string {
   const next = location.pathname + location.search + location.hash;
-  return '/login?next=' + encodeURIComponent(next);
+  // After login the default target is /app anyway, so it needs no ?next=.
+  return next === '/app' ? '/login' : '/login?next=' + encodeURIComponent(next);
 }
