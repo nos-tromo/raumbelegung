@@ -4,12 +4,12 @@ Diese Anleitung bringt Raumbelegung auf deinem Rechner zum Laufen und führt ein
 
 Dauer: etwa 10 Minuten Einrichtung, 30 bis 45 Minuten für den Testdurchlauf.
 
-| Was | Adresse |
-|---|---|
-| App | http://localhost:5173 |
-| Mailpit (alle Mails) | http://localhost:8025 |
-| API-Dokumentation | http://localhost:8000/api/v1/docs |
-| PostgreSQL | `localhost:5432`, Benutzer, Passwort und Datenbank: `raumbelegung` |
+| Was                  | Adresse                                                                |
+| -------------------- | ---------------------------------------------------------------------- |
+| App                  | http://localhost:5173                                                  |
+| Mailpit (alle Mails) | http://localhost:8025                                                  |
+| API-Dokumentation    | http://localhost:8000/api/v1/docs                                      |
+| PostgreSQL           | `localhost:5432`, Benutzer, Passwort und Datenbank: `raumbelegung` |
 
 ## 1. Voraussetzungen
 
@@ -260,24 +260,24 @@ docker image rm raumbelegung-web:local raumbelegung-backend:local   # optional
 
 ## 8. Beenden und zurücksetzen
 
-| Was | Befehl |
-|---|---|
-| Backend und Frontend stoppen | `Strg+C` im Terminal von `make dev` |
-| Container stoppen, Daten behalten | `make down` |
+| Was                               | Befehl                                                                       |
+| --------------------------------- | ---------------------------------------------------------------------------- |
+| Backend und Frontend stoppen      | `Strg+C` im Terminal von `make dev`                                      |
+| Container stoppen, Daten behalten | `make down`                                                                |
 | Alles löschen (Datenbank, Mails) | `make nuke` (fragt nach), danach legt `make dev` eine leere Datenbank an |
-| Nur die Mails löschen | in Mailpit „Delete all“ |
+| Nur die Mails löschen            | in Mailpit „Delete all“                                                    |
 
 ## 9. Wenn etwas hakt
 
-| Problem | Lösung |
-|---|---|
-| `failed to connect to the docker API` | Docker Desktop starten und warten, bis es läuft |
-| `port is already allocated` für 5432 | Es läuft schon ein anderes PostgreSQL, z. B. über Homebrew: `brew services stop postgresql@14` (Version anpassen) |
-| Die App lädt, aber jede Aktion schlägt fehl, im Terminal steht `ECONNREFUSED` | Das Backend läuft nicht auf Port 8000 (`make health`) |
-| `relation "users" does not exist` | Migrationen fehlen: `make migrate` (erledigt `make dev` automatisch) |
-| Keine Mail in Mailpit | `make health`: Läuft `mailpit`? In `backend/.env` muss `MAIL_BACKEND=smtp` und `SMTP_PORT=1025` stehen. Fehler zeigt das Backend-Terminal (`sending mail … failed`) |
-| Nach dem Klick auf einen Mail-Link nicht angemeldet | Die App wurde unter `127.0.0.1` statt `localhost` geöffnet. Überall `localhost` verwenden |
-| Eine Änderung in `backend/.env` wirkt nicht | Backend neu starten (`Strg+C`, dann wieder `make dev`) |
-| „Zu viele Versuche …“ | Das Rate-Limit greift: kurz warten oder das Backend neu starten |
-| Der Browser leitet http://localhost:5173 auf HTTPS um | HSTS aus dem Produktions-Test (Abschnitt 7). Chrome: `chrome://net-internals/#hsts`, unter „Delete domain security policies“ `localhost` eintragen. Safari: Websitedaten für `localhost` löschen |
-| `make install` oder der Build meckert über die Node-Version | Node.js 26 installieren (mindestens 24) |
+| Problem                                                                           | Lösung                                                                                                                                                                                                    |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `failed to connect to the docker API`                                           | Docker Desktop starten und warten, bis es läuft                                                                                                                                                           |
+| `port is already allocated` für 5432                                           | Es läuft schon ein anderes PostgreSQL, z. B. über Homebrew: `brew services stop postgresql@14` (Version anpassen)                                                                                      |
+| Die App lädt, aber jede Aktion schlägt fehl, im Terminal steht `ECONNREFUSED` | Das Backend läuft nicht auf Port 8000 (`make health`)                                                                                                                                                   |
+| `relation "users" does not exist`                                               | Migrationen fehlen: `make migrate` (erledigt `make dev` automatisch)                                                                                                                                   |
+| Keine Mail in Mailpit                                                             | `make health`: Läuft `mailpit`? In `backend/.env` muss `MAIL_BACKEND=smtp` und `SMTP_PORT=1025` stehen. Fehler zeigt das Backend-Terminal (`sending mail … failed`)                          |
+| Nach dem Klick auf einen Mail-Link nicht angemeldet                               | Die App wurde unter `127.0.0.1` statt `localhost` geöffnet. Überall `localhost` verwenden                                                                                                          |
+| Eine Änderung in `backend/.env` wirkt nicht                                    | Backend neu starten (`Strg+C`, dann wieder `make dev`)                                                                                                                                                 |
+| „Zu viele Versuche …“                                                          | Das Rate-Limit greift: kurz warten oder das Backend neu starten                                                                                                                                            |
+| Der Browser leitet http://localhost:5173 auf HTTPS um                             | HSTS aus dem Produktions-Test (Abschnitt 7). Chrome: `chrome://net-internals/#hsts`, unter „Delete domain security policies“ `localhost` eintragen. Safari: Websitedaten für `localhost` löschen |
+| `make install` oder der Build meckert über die Node-Version                    | Node.js 26 installieren (mindestens 24)                                                                                                                                                                    |
