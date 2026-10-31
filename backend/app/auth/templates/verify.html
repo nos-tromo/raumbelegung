@@ -1,0 +1,8 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p>Hallo {{ name }},</p>
+<p>bitte bestätige deine E-Mail-Adresse für Raumbelegung:</p>
+<p><a href="{{ link }}" style="display:inline-block;padding:10px 18px;background:#2f5d50;color:#ffffff;text-decoration:none;border-radius:6px;">E-Mail-Adresse bestätigen</a></p>
+<p style="font-size:13px;color:#5f5a52;">Oder kopiere diesen Link in deinen Browser:<br>{{ link }}</p>
+<p style="font-size:13px;color:#5f5a52;">Der Link ist 24 Stunden gültig. Wenn du dich nicht registriert hast, kannst du diese E-Mail ignorieren.</p>
+{% endblock %}

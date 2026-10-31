@@ -1,0 +1,12 @@
+Hallo,
+
+{{ inviter }} hat dich eingeladen, im Kalender „{{ calendar_name }}“ bei Raumbelegung mitzumachen (Rolle: {{ role_label }}).
+
+Einladung ansehen und annehmen:
+
+{{ link }}
+
+Die Einladung ist 7 Tage gültig und gilt für die Adresse {{ to }}. Falls du noch kein Konto hast, registriere dich bitte mit dieser Adresse.
+
+Viele Grüße
+Raumbelegung

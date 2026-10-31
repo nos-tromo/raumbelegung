@@ -1,0 +1,10 @@
+Hallo {{ name }},
+
+bitte bestätige deine E-Mail-Adresse für Raumbelegung über diesen Link:
+
+{{ link }}
+
+Der Link ist 24 Stunden gültig. Wenn du dich nicht registriert hast, kannst du diese E-Mail ignorieren.
+
+Viele Grüße
+Raumbelegung

@@ -1,0 +1,64 @@
+[project]
+name = "raumbelegung-backend"
+version = "0.1.0"
+description = "Raumbelegung API (FastAPI)"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.162",
+    "fastapi-users[sqlalchemy]>=15.0.5",
+    "fastapi-users-db-sqlalchemy>=7.0.0",
+    "sqlalchemy[asyncio]>=2.0.40,<2.1",  # fastapi-users-db-sqlalchemy 7.0.0 requires <2.1
+    "asyncpg",
+    "alembic>=1.20",
+    "pydantic-settings>=2.16",
+    "slowapi>=0.1.10",
+    "aiosmtplib>=5.1",
+    "jinja2",
+    "uvicorn[standard]",
+    "python-multipart",
+    "email-validator",
+    "tzdata",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9",
+    "pytest-asyncio",
+    "httpx",
+    "aiosqlite",
+    "ruff",
+    "mypy",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "S", "ASYNC", "RUF", "SIM"]
+ignore = [
+    "B008",  # FastAPI's Depends() in defaults is idiomatic
+    "RUF001", "RUF002", "RUF003",  # German typography („“, –) is intended
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "E501"]
+"alembic/versions/**" = ["E501"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+plugins = ["pydantic.mypy"]
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["slowapi.*", "limits.*"]
+ignore_missing_imports = true

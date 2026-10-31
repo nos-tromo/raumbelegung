@@ -1,0 +1,8 @@
+{% extends "_layout.html" %}
+{% block body %}
+<p>Hallo,</p>
+<p>{{ inviter }} hat dich eingeladen, im Kalender <strong>„{{ calendar_name }}“</strong> bei Raumbelegung mitzumachen (Rolle: {{ role_label }}).</p>
+<p><a href="{{ link }}" style="display:inline-block;padding:10px 18px;background:#2f5d50;color:#ffffff;text-decoration:none;border-radius:6px;">Einladung ansehen</a></p>
+<p style="font-size:13px;color:#5f5a52;">Oder kopiere diesen Link in deinen Browser:<br>{{ link }}</p>
+<p style="font-size:13px;color:#5f5a52;">Die Einladung ist 7 Tage gültig und gilt für die Adresse {{ to }}. Falls du noch kein Konto hast, registriere dich bitte mit dieser Adresse.</p>
+{% endblock %}
