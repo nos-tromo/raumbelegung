@@ -51,9 +51,10 @@ describe('RequireVerified', () => {
 describe('RequireAuth', () => {
   it('redirects to login with the return path', async () => {
     const { router } = renderRoutes(routes, '/app?x=1', { user: null });
-    await waitFor(() => expect(router.state.location.pathname).toBe('/login'));
+    // Wait for the DOM, not router.state: RouterProvider commits in a transition.
+    expect(await screen.findByText('Login-Seite')).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe('/login');
     expect(router.state.location.search).toBe('?next=' + encodeURIComponent('/app?x=1'));
-    expect(screen.getByText('Login-Seite')).toBeInTheDocument();
   });
 });
 
