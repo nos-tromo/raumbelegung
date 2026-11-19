@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { RedirectIfAuthed } from '../auth/guards';
@@ -24,10 +24,12 @@ describe('ResetPassword', () => {
     const { router } = renderRoutes(routes, '/reset-password?token=abc', { user: null });
     fillPasswords('ein-langes-passwort');
     await userEvent.click(screen.getByRole('button', { name: 'Passwort speichern' }));
-    await waitFor(() => expect(router.state.location.pathname).toBe('/login'));
+    // RouterProvider renders navigations in a transition: router.state switches
+    // before the DOM does, so wait for the rendered page.
     expect(
-      screen.getByText(/Aus Sicherheitsgründen wurdest du überall abgemeldet/),
+      await screen.findByText(/Aus Sicherheitsgründen wurdest du überall abgemeldet/),
     ).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe('/login');
     expect(api.calls[0]).toMatchObject({
       method: 'POST',
       path: '/auth/reset-password',
